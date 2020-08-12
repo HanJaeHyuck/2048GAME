@@ -1,4 +1,5 @@
 var table = document.getElementById("table");
+var score = document.getElementById("score");
 var data = [];
 function init() {
     var fragment = document.createDocumentFragment();
@@ -27,10 +28,16 @@ function random() {
             }
         });
     });
-    console.log(blank);
-    var randomSpace = blank[Math.floor(Math.random() * blank.length)];
-    data[randomSpace[0]][randomSpace[1]] = 2;
-    drow();
+    if(blank.length === 0) {
+        alert("GAMEOVER : "+ score.textContent);
+        table.innerHTML = "";
+        init();
+    } else {
+        var randomSpace = blank[Math.floor(Math.random() * blank.length)];
+        data[randomSpace[0]][randomSpace[1]] = 2;
+        drow();
+    }
+    
 }
 
 function drow(){
@@ -72,7 +79,9 @@ window.addEventListener('mousemove', function(e) {
 });
 
 window.addEventListener('mouseup', function(e) {
-    // console.log('mouseup', e);
+    if(endX === 0 && endY === 0){
+        return;
+    }
     
     endIocation = [e.clientX, e.clientY];
     if(draging) {
@@ -90,7 +99,6 @@ window.addEventListener('mouseup', function(e) {
         } else if(endY < 0 && Math.abs(endX) / Math.abs(endY) < 1) {
             way = "위";
         }
-        console.log(way);
     }
     //x좌표 y좌표가 끝날때의 차이
     
@@ -109,9 +117,8 @@ window.addEventListener('mouseup', function(e) {
                         if(rowData) {
                             if(newData[i][newData[i].length - 1] && newData[i][newData[i].length - 1] === rowData) {
                                 newData[i][newData[i].length - 1] *= 2;
-                                // var nowScore = parseInt(score.textContent, 10);
-                                // score.textContent = nowScore + newData[i][newData[i].length - 1];
-                                // parseInt(sc)
+                                var nowScore = parseInt(score.textContent, 10);
+                                score.textContent = nowScore + newData[i][newData[i].length - 1];
                             } else {
                                 newData[i].push(rowData);
                             }
@@ -136,7 +143,14 @@ window.addEventListener('mouseup', function(e) {
                 data.forEach(function(cloneData, i) {
                     cloneData.forEach(function(rowData, j) {
                         if(rowData) {
-                            newData[i].unshift(rowData);
+                            if(newData[i][0] && newData[i][0] === rowData) {
+                                newData[i][0] *= 2;
+                                var nowScore = parseInt(score.textContent, 10);
+                                score.textContent = nowScore + newData[i][0];
+                            } else {
+                                newData[i].unshift(rowData);
+                            }
+                        
                         }
                     });
                 });
@@ -157,7 +171,13 @@ window.addEventListener('mouseup', function(e) {
             data.forEach(function(cloneData, i) {
                 cloneData.forEach(function(rowData, j) {
                     if(rowData) {
-                        newData[j].push(rowData);
+                        if(newData[j][newData[j].length - 1] && newData[j][newData[j].length - 1] === rowData) {
+                            newData[j][newData[j].length - 1] *= 2;
+                            var nowScore = parseInt(score.textContent, 10);
+                            score.textContent = nowScore + newData[j][newData[j].length - 1];
+                        } else {
+                            newData[j].push(rowData);
+                        }
                     }
                 });
             });
@@ -178,7 +198,13 @@ window.addEventListener('mouseup', function(e) {
                 data.forEach(function(cloneData, i) {
                     cloneData.forEach(function(rowData, j) {
                         if(rowData) {
-                            newData[j].unshift(rowData);
+                            if(newData[j][0] && newData[j][0] === rowData) {
+                                newData[j][0] *= 2;
+                                var nowScore = parseInt(score.textContent, 10);
+                                score.textContent = nowScore + newData[j][0];
+                            } else {
+                                newData[j].unshift(rowData);
+                            }
                         }
                     });
                 });
