@@ -79,16 +79,18 @@ window.addEventListener('mousemove', function(e) {
 });
 
 window.addEventListener('mouseup', function(e) {
+    endIocation = [e.clientX, e.clientY];        
+    var way;
+    var endX = endIocation[0] - startIocation[0];
+    var endY = endIocation[1] - startIocation[1];    
+
     if(endX === 0 && endY === 0){
         return;
     }
     
-    endIocation = [e.clientX, e.clientY];
     if(draging) {
+
         
-        var way;
-        var endX = endIocation[0] - startIocation[0];
-        var endY = endIocation[1] - startIocation[1];
         
         if(endX < 0 && Math.abs(endX) / Math.abs(endY) > 1) {
             way = "왼쪽";
