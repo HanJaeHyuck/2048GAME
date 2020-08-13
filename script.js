@@ -1,5 +1,7 @@
 var table = document.getElementById("table");
 var score = document.getElementById("score");
+var bestScore = document.getElementById("best-score");
+var reset = document.getElementById("reset");
 var data = [];
 function init() {
     var fragment = document.createDocumentFragment();
@@ -17,6 +19,16 @@ function init() {
     table.appendChild(fragment);
 }
 
+reset.addEventListener("click", function() {
+    table.innerHTML = "";
+    if(score.innerHTML > bestScore.innerHTML) {
+        bestScore.innerHTML = score.textContent;
+    }
+    data = [];
+    score.innerHTML = 0;
+    init();
+});
+
 
 function random() {
     var blank = [];
@@ -31,6 +43,11 @@ function random() {
     if(blank.length === 0) {
         alert("GAMEOVER : "+ score.textContent);
         table.innerHTML = "";
+        if(score.innerHTML > bestScore.innerHTML) {
+            bestScore.innerHTML = score.textContent;
+        }
+        data = [];
+        score.innerHTML = 0;
         init();
     } else {
         var randomSpace = blank[Math.floor(Math.random() * blank.length)];
@@ -43,10 +60,57 @@ function random() {
 function drow(){
     data.forEach(function(cloneData, i ) {
         cloneData.forEach(function(rowData, j) {
-            if(rowData > 0 ) {
+            if(rowData == 2) {
                 table.children[i].children[j].textContent = rowData;
+                table.children[i].children[j].style.backgroundColor = "#eee4da"; 
+                table.children[i].children[j].style.color = "#2b2724";
+            } else if(rowData == 4) {
+                table.children[i].children[j].textContent = rowData;
+                table.children[i].children[j].style.backgroundColor = "#ede0c8"; 
+                table.children[i].children[j].style.color = "#2b2724";
+            } else if(rowData == 8) {
+                table.children[i].children[j].textContent = rowData;
+                table.children[i].children[j].style.backgroundColor = "#f2b179"; 
+                table.children[i].children[j].style.color = "#f9f6f2";
+            } else if(rowData == 16) {
+                table.children[i].children[j].textContent = rowData;
+                table.children[i].children[j].style.backgroundColor = "#f6603c"; 
+                table.children[i].children[j].style.color = "#f9f6f2";
+            } else if(rowData == 32) {
+                table.children[i].children[j].textContent = rowData;
+                table.children[i].children[j].style.backgroundColor = "#edcf72"; 
+                table.children[i].children[j].style.color = "#f9f6f2";
+            } else if(rowData == 64) {
+                table.children[i].children[j].textContent = rowData;
+                table.children[i].children[j].style.backgroundColor = "#ea5a38"; 
+                table.children[i].children[j].style.color = "#f9f6f2";
+            } else if(rowData == 128) {
+                table.children[i].children[j].textContent = rowData;
+                table.children[i].children[j].style.backgroundColor = "#f2d04b"; 
+                table.children[i].children[j].style.color = "#f9f6f2";
+            } else if(rowData == 256) {
+                table.children[i].children[j].textContent = rowData;
+                table.children[i].children[j].style.backgroundColor = "#edc850"; 
+                table.children[i].children[j].style.color = "#f9f6f2";
+            } else if(rowData == 512) {
+                table.children[i].children[j].textContent = rowData;
+                table.children[i].children[j].style.backgroundColor = "#e3ba14"; 
+                table.children[i].children[j].style.color = "#f9f6f2";
+            } else if(rowData == 1024) {
+                table.children[i].children[j].textContent = rowData;
+                table.children[i].children[j].style.backgroundColor = "#e0ba11"; 
+                table.children[i].children[j].style.color = "#f9f6f2";
+            } else if(rowData == 2048) {
+                table.children[i].children[j].textContent = rowData;
+                table.children[i].children[j].style.backgroundColor = "#e9c500"; 
+                table.children[i].children[j].style.color = "#f9f6f2";
+            } else if(rowData == 4096) {
+                table.children[i].children[j].textContent = rowData;
+                table.children[i].children[j].style.backgroundColor = "#5ddb94"; 
+                table.children[i].children[j].style.color = "#f9f6f2";
             } else {
                 table.children[i].children[j].textContent = '';
+                table.children[i].children[j].style.backgroundColor = "#dfdfdf";
             }
         });
     });
@@ -128,7 +192,6 @@ window.addEventListener('mouseup', function(e) {
                         }
                     });
                 });
-                console.log(newData);
                 [1, 2, 3, 4].forEach(function(cloneData, i) {
                     [1, 2, 3, 4].forEach(function(rowData, j) {
                         data[i][j] = newData[i][j] || 0;
@@ -156,7 +219,6 @@ window.addEventListener('mouseup', function(e) {
                         }
                     });
                 });
-                console.log(newData);
                 [1, 2, 3, 4].forEach(function(cloneData, i) {
                     [1, 2, 3, 4].forEach(function(rowData, j) {
                         data[i][3 - j] = newData[i][j] || 0;
@@ -183,7 +245,6 @@ window.addEventListener('mouseup', function(e) {
                     }
                 });
             });
-            console.log(newData);
             [1, 2, 3, 4].forEach(function(rowData, i) {
                 [1, 2, 3, 4].forEach(function(cloneData, j) {
                     data[j][i] = newData[i][j] || 0;
@@ -210,7 +271,6 @@ window.addEventListener('mouseup', function(e) {
                         }
                     });
                 });
-                console.log(newData);
                 [1, 2, 3, 4].forEach(function(rowData, i) {
                     [1, 2, 3, 4].forEach(function(cloneData, j) {
                         data[3 - j][i] = newData[i][j] || 0;
