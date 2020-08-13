@@ -3,6 +3,7 @@ var score = document.getElementById("score");
 var bestScore = document.getElementById("best-score");
 var reset = document.getElementById("reset");
 var data = [];
+var way;
 function init() {
     var fragment = document.createDocumentFragment();
     [1, 2, 3, 4].forEach(function() {
@@ -128,6 +129,32 @@ var startIocation = [];
 // 끝 좌표
 var endIocation = [];
 //마우스 스와이프(드래그)
+let isKeydown = false
+window.addEventListener("keydown", (e) => {
+    if(isKeydown) return;
+    isKeydown = true;
+
+    switch(e.key) {
+        case "ArrowUp":
+            way = "위"
+            break;
+        case "ArrowDown":
+            way = "아래"
+            break;
+        case "ArrowLeft":
+            way = "왼쪽"
+            break;
+        case "ArrowRight":
+            way = "오른쪽"
+            break;
+    }
+    event();
+});
+
+window.addEventListener("keyup", (e) => {
+    isKeydown = false;
+});
+
 window.addEventListener('mousedown', function(e) {
     // console.log('mousedown', e);
     dragStart = true;
@@ -144,7 +171,6 @@ window.addEventListener('mousemove', function(e) {
 
 window.addEventListener('mouseup', function(e) {
     endIocation = [e.clientX, e.clientY];        
-    var way;
     var endX = endIocation[0] - startIocation[0];
     var endY = endIocation[1] - startIocation[1];    
 
@@ -167,7 +193,11 @@ window.addEventListener('mouseup', function(e) {
         }
     }
     //x좌표 y좌표가 끝날때의 차이
+    event();
     
+});
+
+function event() {
     dragStart = false;
     draging = false;
     switch(way) {
@@ -279,4 +309,4 @@ window.addEventListener('mouseup', function(e) {
             break;
     }
     random();
-});
+}
